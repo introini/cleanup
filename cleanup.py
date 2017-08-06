@@ -4,6 +4,7 @@ Moves files with a given extension from a source folder to a
 defined destination.
 """
 import os
+import sys
 import argparse
 from shutil import move
 
@@ -43,6 +44,8 @@ def move_files(source, dest, file_list):
     dest -- file path to store moved files
     file_list -- files that will be moved
     """
+    if not os.path.exists(dest):
+        return print("The path {0} does not exist".format(dest))
 
     return [move(os.path.join(source, f), dest) for f in file_list]
 
@@ -75,4 +78,5 @@ else:
     try:
         move_files(PATH_S, PATH_D, FILES_TO_MOVE)
     except:
-        print('Something went wrong')
+        print('Something went wrong:', sys.exc_info()[0])
+        raise
